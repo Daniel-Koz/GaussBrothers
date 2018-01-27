@@ -1,4 +1,5 @@
-def Seidel(A,b,x,dr):
+def Seidel(A,b,x,dr,limite):
+    crit = 0
     continua = 1
     converge = 1
     while(continua == 1 & converge == 1):
@@ -11,9 +12,13 @@ def Seidel(A,b,x,dr):
                     x[i] = (b[i] - aux)/A[i][i]
         continua = testa(xTmp,x,dr)
         converge = conv(xTmp,x)
+        if (crit > limite):
+            continua = 0
+            print("Sem solução satisfatória depois de",crit,"iterações")
     return x
 
-def Jacobi(A,b,x,dr):
+def Jacobi(A,b,x,dr,limite):
+    crit = 0
     continua = 1
     converge = 1
     while(continua == 1 & converge == 1):
@@ -26,6 +31,10 @@ def Jacobi(A,b,x,dr):
                     x[i] = (b[i] - aux)/A[i][i]
         continua = testa(xTmp,x,dr)
         converge = conv(xTmp,x)
+        crit += 1
+        if (crit > limite):
+            continua = 0
+            print("Sem solução satisfatória depois de",crit,"iterações")
     return x
 
 def testa(r1,r2,dr):
@@ -46,19 +55,20 @@ def conv(r1,r2):
             break
     return result
 
-def escolha(A,b,x,dr):
+def escolha(A,b,x,dr,limite):
     validade = 1
     swi = input("1: Jacobi\n2: Seidel\n:")
     if (swi == "1"):
-        print("Resposta:",Jacobi(A,b,x,dr))
+        print("Resposta:",Jacobi(A,b,x,dr,limite))
     elif (swi == "2"):
-        print("Resposta:",Seidel(A,b,x,dr))
+        print("Resposta:",Seidel(A,b,x,dr,limite))
     else:
         print("Opção inválida, retornando.")
         validade = 0
     return validade
 
 def mainJS():
+    limite = 999
     print("Iniciando Jacobi e Seidel")
     varQ = 1
     while(varQ >= 1):
@@ -88,7 +98,7 @@ def mainJS():
             
             while(esco == 0):
                 print("Resolver Sistema utilizando qual metodo?")
-                esco = escolha(mat,vet,res,desV)
+                esco = escolha(mat,vet,res,desV,limite)
         else:
             print("Encerrando Jacobi e Seidel")
 
