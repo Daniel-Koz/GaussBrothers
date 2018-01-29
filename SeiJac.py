@@ -67,39 +67,64 @@ def escolha(A,b,x,dr,limite):
         validade = 0
     return validade
 
+def menu(varQ,limite):
+    esco = 0
+    if(varQ >= 1):
+        matX = [x[:] for x in [[0.0]*(varQ+1)]*varQ]
+        
+        for i in range(varQ):
+            for j in range(varQ+1):
+                print("Sistema:",matX)
+                print("Linha:",i+1,"Coluna",j+1,":")
+                matX[i][j] = float(input())
+        
+        res = [0.0]*varQ
+        vet = [0.0]*varQ
+        mat = [x[:] for x in [[0.0]*(varQ)]*varQ]
+        
+        for i in range(0,varQ):
+            vet[i] = matX[i][varQ]
+            for j in range(0,varQ):
+                mat[i][j] = matX[i][j]
+        
+        desV = float(input("dr máximo:"))
+
+        print("Sistema:",matX)
+        
+        while(esco == 0):
+            print("Resolver Sistema utilizando qual metodo?")
+            esco = escolha(mat,vet,res,desV,limite)
+        
+
 def mainJS():
     limite = 999
     print("Iniciando Jacobi e Seidel")
     varQ = 1
     while(varQ >= 1):
-        esco = 0
-        varQ = int(input("Quantas variáveis? (0 para ancerrar):"))
-        if(varQ >= 1):
-            matX = [x[:] for x in [[0.0]*(varQ+1)]*varQ]
-            
-            for i in range(varQ):
-                for j in range(varQ+1):
-                    print("Sistema:",matX)
-                    print("Linha:",i+1,"Coluna",j+1,":")
-                    matX[i][j] = float(input())
-            
-            res = [0.0]*varQ
-            vet = [0.0]*varQ
-            mat = [x[:] for x in [[0.0]*(varQ)]*varQ]
-            
-            for i in range(0,varQ):
-                vet[i] = matX[i][varQ]
-                for j in range(0,varQ):
-                    mat[i][j] = matX[i][j]
-            
-            desV = float(input("dr máximo:"))
+        varQ = int(input("Quantas variáveis? (0 para encerrar):"))
+        menu(varQ,limite)
+        
+    print("Encerrando Jacobi e Seidel")
+        
 
-            print("Sistema:",matX)
-            
-            while(esco == 0):
-                print("Resolver Sistema utilizando qual metodo?")
-                esco = escolha(mat,vet,res,desV,limite)
-        else:
-            print("Encerrando Jacobi e Seidel")
+
+
+S = [[7.0, 3.0, -1.0, 2.0], [3.0, 8.0, 1.0, -4.0], [-1.0, 1.0, 4.0, -1.0], [2.0, -4.0, -1.0, 6.0]]
+a = [-1.0, 0.0, -3.0, 1.0]
+y = [0.0]*len(S)
+d = 0.00001
+l = 999
+
+J = [[-0.5, 1.0], [2.0, 5.0]]
+ac= [1.0, -13.0]
+o = [0.0]*len(J)
+b = 0.00001
+e = 999
+
+def testeSeidel():
+    Seidel(S,a,y,d,l)
+
+def testeJacobi():
+    Jacobi(J,ac,o,b,e)
 
 mainJS()
