@@ -81,19 +81,29 @@ def menu(varQ,limite):
         res = [0.0]*varQ
         vet = [0.0]*varQ
         mat = [x[:] for x in [[0.0]*(varQ)]*varQ]
-        
+
+
+        zeroOnDiag = 0
         for i in range(0,varQ):
             vet[i] = matX[i][varQ]
             for j in range(0,varQ):
                 mat[i][j] = matX[i][j]
-        
-        desV = float(input("dr máximo:"))
 
-        print("Sistema:",matX)
-        
-        while(esco == 0):
-            print("Resolver Sistema utilizando qual metodo?")
-            esco = escolha(mat,vet,res,desV,limite)
+        for i in range(0,varQ):
+            if (mat[i][i] == 0.0):
+                zeroOnDiag = 1
+
+
+        if (zeroOnDiag == 0):
+            desV = float(input("dr máximo:"))
+
+            print("Sistema:",matX)
+            
+            while(esco == 0):
+                print("Resolver Sistema utilizando qual metodo?")
+                esco = escolha(mat,vet,res,desV,limite)
+        else:
+            print("Zero na diagonal principal.")
         
 
 def mainJS():
@@ -118,7 +128,7 @@ l = 999
 J = [[-0.5, 1.0], [2.0, 5.0]]
 ac= [1.0, -13.0]
 o = [0.0]*len(J)
-b = 0.00001
+b = 0.000000000001
 e = 999
 
 def testeSeidel():
